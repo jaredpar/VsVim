@@ -75,6 +75,7 @@ module LocalSettingNames =
     let CommentsName = "comments"
     let IsKeywordName = "iskeyword"
     let IsIdentName = "isident"
+    let FileFormatName = "fileformat"
 
 module WindowSettingNames =
 
@@ -619,6 +620,9 @@ and IVimLocalSettings =
 
     /// Is the provided NumberFormat supported by the current options
     abstract IsNumberFormatSupported: NumberFormat -> bool
+
+    /// Which fileformat to convert the file to: unix, dos, mac
+    abstract FileFormat: string with get, set
 
     inherit IVimSettings
 

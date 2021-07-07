@@ -537,6 +537,9 @@ type internal LocalSettings
         _globalSettings: IVimGlobalSettings
     ) =
 
+    //TODO Also support global FileFormats setting, in addition to local FileFormat setting,
+    //which is only per buffer
+    //TODO Select default FileFormat and FileFormats values based on current OS
     static let LocalSettingInfoList =
         [|
             (AutoIndentName, "ai", SettingValue.Toggle false, SettingOptions.None)
@@ -554,6 +557,7 @@ type internal LocalSettings
             (SoftTabStopName, "sts", SettingValue.Number 0, SettingOptions.None)
             (TabStopName, "ts", SettingValue.Number 8, SettingOptions.None)
             (TextWidthName, "tw", SettingValue.Number 0, SettingOptions.None)
+            (FileFormatName, "ff", SettingValue.String "dos", SettingOptions.None)
         |]
 
     static let LocalSettingList = 
@@ -667,6 +671,9 @@ type internal LocalSettings
         member x.TextWidth
             with get() = _map.GetNumberValue TextWidthName
             and set value = _map.TrySetValue TextWidthName (SettingValue.Number value) |> ignore
+        member x.FileFormat
+            with get() = _map.GetStringValue FileFormatName
+            and set value = _map.TrySetValue FileFormatName (SettingValue.String value) |> ignore
 
         member x.IsNumberFormatSupported numberFormat = x.IsNumberFormatSupported numberFormat
 

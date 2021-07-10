@@ -153,8 +153,21 @@ type internal CommandMode
         _isPartialCommand <- false
 
         arg.CompleteAnyTransaction()
+
+        let commandTextWithCount count = 
+            match count with
+            | Some c ->
+                if c = 1 then
+                    "." 
+                elif 1 < c then
+                    sprintf ".,.+%i" (c - 1)
+                else
+                    StringUtil.Empty
+            | Option.None -> StringUtil.Empty
+
         let commandText = 
             match arg with
+            | ModeArgument.CommandWithCount count -> _isPartialCommand <- true; commandTextWithCount count
             | ModeArgument.PartialCommand command -> _isPartialCommand <- true; command
             | _ -> StringUtil.Empty
 

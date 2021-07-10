@@ -3021,6 +3021,17 @@ type internal CommandUtil
     member x.RunNormalCommandCore command (data: CommandData) =
         let registerName = data.RegisterName
         let count = data.CountOrDefault
+
+        let getCount count = 
+            match count with
+                | Some c -> count
+                | Option.None -> data.Count
+
+        let getModeArgument modeArgument = 
+            match modeArgument with
+                | ModeArgument.CommandWithCount count -> ModeArgument.CommandWithCount (getCount count)
+                | _ -> modeArgument
+
         match command with
         | NormalCommand.AddCaretAtMousePoint -> x.AddCaretAtMousePoint()
         | NormalCommand.AddCaretOnAdjacentLine direction -> x.AddCaretOnAdjacentLine direction
@@ -3125,7 +3136,7 @@ type internal CommandUtil
         | NormalCommand.ShiftMotionLinesRight motion -> x.RunWithMotion motion x.ShiftMotionLinesRight
         | NormalCommand.SplitViewHorizontally -> x.SplitViewHorizontally()
         | NormalCommand.SplitViewVertically -> x.SplitViewVertically()
-        | NormalCommand.SwitchMode (modeKind, modeArgument) -> x.SwitchMode modeKind modeArgument
+        | NormalCommand.SwitchMode (modeKind, modeArgument) -> x.SwitchMode modeKind (getModeArgument modeArgument)
         | NormalCommand.SwitchModeVisualCommand visualKind -> x.SwitchModeVisualCommand visualKind data.Count
         | NormalCommand.SwitchPreviousVisualMode -> x.SwitchPreviousVisualMode()
         | NormalCommand.SwitchToSelection caretMovement -> x.SwitchToSelection caretMovement

@@ -29,7 +29,7 @@ type internal VisualMode
         | VisualKind.Line -> (OperationKind.LineWise, ModeKind.VisualLine)
         | VisualKind.Block -> (OperationKind.CharacterWise, ModeKind.VisualBlock)
 
-    // Command to show when entering command from Visual Mode
+    // Command to show when entering command from Visual Mode	
     static let CommandFromVisualModeString = "'<,'>"
 
     /// Get a mark and use the provided 'func' to create a Motion value

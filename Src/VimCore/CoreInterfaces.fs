@@ -2681,6 +2681,11 @@ type VisualInsertKind =
 type ModeArgument =
     | None
 
+    /// Begins command mode with a specified count.
+    /// When giving a count before entering ":", this is translated into:
+    /// :.,.+(count - 1)
+    | CommandWithCount of Count: int option
+
     /// Passed to visual mode to indicate what the initial selection should be.  The SnapshotPoint
     /// option provided is meant to be the initial caret point.  If not provided the actual 
     /// caret point is used
@@ -2719,6 +2724,7 @@ with
     member x.LinkedUndoTransaction =
         match x with
         | ModeArgument.None -> Option.None
+        | ModeArgument.CommandWithCount _ -> Option.None
         | ModeArgument.InitialVisualSelection _ -> Option.None
         | ModeArgument.InsertBlock (_, _, transaction) -> Some transaction
         | ModeArgument.InsertWithCount _ -> Option.None

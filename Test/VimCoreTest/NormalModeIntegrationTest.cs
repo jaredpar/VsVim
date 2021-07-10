@@ -8990,6 +8990,33 @@ namespace Vim.UnitTest
                 Assert.Equal("dogbbb", _textView.GetLine(0).GetText());
             }
 
+            [WpfFact]
+            public void SwitchToCommandMode_Normal()
+            {
+                Create("");
+                _vimBuffer.Process(":");
+                Assert.Equal(ModeKind.Command, _vimBuffer.Mode.ModeKind);
+                Assert.Equal(string.Empty, _vimBuffer.CommandMode.Command);
+            }
+
+            [WpfFact]
+            public void SwitchToCommandMode_CountOne()
+            {
+                Create("");
+                _vimBuffer.Process("1:");
+                Assert.Equal(ModeKind.Command, _vimBuffer.Mode.ModeKind);
+                Assert.Equal(".", _vimBuffer.CommandMode.Command);
+            }
+
+            [WpfFact]
+            public void SwitchToCommandMode_CountTwo()
+            {
+                Create("");
+                _vimBuffer.Process("2:");
+                Assert.Equal(ModeKind.Command, _vimBuffer.Mode.ModeKind);
+                Assert.Equal(".,.+1", _vimBuffer.CommandMode.Command);
+            }
+
             /// <summary>
             /// Make sure repeat last char search is functioning
             /// </summary>

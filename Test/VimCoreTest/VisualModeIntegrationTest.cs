@@ -1075,6 +1075,16 @@ namespace Vim.UnitTest
                     Assert.Equal("the fish. end", _textBuffer.GetLine(2).GetText());
                 }
 
+                [WpfFact]
+                public void SwitchToCommandMode()
+                {
+                    Create("cat");
+                    _textView.MoveCaretTo(0);
+                    _vimBuffer.Process("V:");
+                    Assert.Equal(ModeKind.Command, _vimBuffer.Mode.ModeKind);
+                    Assert.Equal("'<,'>", _vimBuffer.CommandMode.Command);
+                }
+
                 /// <summary>
                 /// The 'w' motion should result in a selection that encompasses the entire word
                 /// </summary>
@@ -1663,12 +1673,12 @@ namespace Vim.UnitTest
                     // Reported in issue #2675.
                     Create("", "", "", "");
                     _vimBuffer.ProcessNotation(@"<C-q>jjI#<Esc>");
-                    Assert.Equal(new[] { "#", "#", "#", ""}, _textBuffer.GetLines());
+                    Assert.Equal(new[] { "#", "#", "#", "" }, _textBuffer.GetLines());
 
                 }
             }
 
-            public sealed class SurrogatePairTest: BlockInsertTest
+            public sealed class SurrogatePairTest : BlockInsertTest
             {
                 /// <summary>
                 /// Block insert should not be splitting surrogate pairs into spaces as it does for non-surrogate
@@ -2338,7 +2348,7 @@ namespace Vim.UnitTest
                     var span = new Span(_textBuffer.GetPoint(0), _textBuffer.CurrentSnapshot.Length);
                     Assert.Equal(span, _textView.GetSelectionSpan());
                 }
-                
+
                 [WpfTheory]
                 [InlineData("inclusive")]
                 [InlineData("exclusive")]
@@ -2362,7 +2372,7 @@ namespace Vim.UnitTest
                     _vimBuffer.Process("vitat");
                     Assert.Equal(_textBuffer.GetLineRange(1, 3).Extent, _textView.GetSelectionSpan());
                 }
-                
+
                 [WpfFact]
                 public void SelectMultiLineTag()
                 {

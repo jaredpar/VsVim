@@ -178,7 +178,7 @@ type internal NormalMode
                 yield ("gwgw", CommandFlags.Repeatable, NormalCommand.FormatTextLines true)
                 yield ("gww", CommandFlags.Repeatable, NormalCommand.FormatTextLines true)
                 yield ("!!", CommandFlags.Repeatable, NormalCommand.FilterLines)
-                yield (":", CommandFlags.Special, NormalCommand.SwitchMode (ModeKind.Command, ModeArgument.None))
+                yield (":", CommandFlags.Special, NormalCommand.SwitchMode (ModeKind.Command, (ModeArgument.CommandWithCount Option.None)))
                 yield ("<C-^>", CommandFlags.None, NormalCommand.GoToRecentView)
                 yield ("<LeftMouse>", CommandFlags.Special, NormalCommand.MoveCaretToMouse)
                 yield ("<LeftDrag>", CommandFlags.Special, NormalCommand.SelectTextForMouseDrag)

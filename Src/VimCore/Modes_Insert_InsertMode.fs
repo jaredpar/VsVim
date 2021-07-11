@@ -159,6 +159,9 @@ type PasteFlags =
     /// The text should be processed as if it were typed
     | TextAsTyped = 0x4
 
+    /// Insert text literally
+    | LiteralInsert = 0x8
+
 /// Certain types of edits type predecence over the normal insert commands and are 
 /// represented here
 [<RequireQualifiedAccess>]
@@ -915,7 +918,9 @@ type internal InsertMode
     /// that can be done now
     member x.Paste (keyInput: KeyInput) (flags: PasteFlags) = 
 
+        let isLiteral = (flags &&& PasteFlags.LiteralInsert) > PasteFlags.None
         let isOverwrite = _sessionData.ActiveEditItem = ActiveEditItem.OverwriteReplace
+        let register = keyInput.RawChar.Value
         _sessionData <- { _sessionData with ActiveEditItem = ActiveEditItem.None }
 
         if keyInput = KeyInputUtil.EscapeKey then
@@ -938,12 +943,15 @@ type internal InsertMode
             | Some text -> 
 
                 // Normalize the line endings here
-                let text = 
+                let text =
                     let newLine = _operations.GetNewLineText x.CaretPoint
                     EditUtil.NormalizeNewLines text newLine
 
                 let keyInputSet = KeyInputSet(keyInput)
-                let insertCommand = if isOverwrite then InsertCommand.Overwrite text else InsertCommand.Insert text
+                let insertCommand = if isOverwrite then InsertCommand.Overwrite text
+                                    elif isLiteral then InsertCommand.LiteralPaste register
+                                    else InsertCommand.Insert text
+
                 x.RunInsertCommand insertCommand keyInputSet CommandFlags.InsertEdit
 
     /// This will attempt to complete an abbreviation based on the currently typed text without inserting
@@ -1109,10 +1117,10 @@ type internal InsertMode
             let flags = PasteFlags.Formatting ||| PasteFlags.Indent
             pasteSpecial flags
         elif keyInput = KeyInputUtil.CharWithControlToKeyInput 'o' then
-            let flags = PasteFlags.None
+            let flags = PasteFlags.LiteralInsert
             pasteSpecial flags
         elif keyInput = KeyInputUtil.CharWithControlToKeyInput 'p' then
-            let flags = PasteFlags.Indent
+            let flags = PasteFlags.Indent ||| PasteFlags.LiteralInsert
             pasteSpecial flags
         else
             let flags = PasteFlags.Formatting ||| PasteFlags.Indent ||| PasteFlags.TextAsTyped

@@ -40,6 +40,7 @@ type internal InsertUtil
     let _wordUtil = _vimBufferData.WordUtil
     let _vimHost = _vimBufferData.Vim.VimHost
     let _vimTextBuffer = _vimBufferData.VimTextBuffer
+    let _registermap = _vimBufferData.Vim.RegisterMap
     let mutable _combinedEditStartPoint: ITrackingPoint option = None
     let mutable _replaceUndoLine: ITextSnapshotLine option = None
 
@@ -681,6 +682,7 @@ type internal InsertUtil
             | InsertCommand.UndoReplace -> x.UndoReplace ()
             | InsertCommand.DeleteLineBeforeCursor -> x.DeleteLineBeforeCursor()
             | InsertCommand.Paste -> x.Paste()
+            | InsertCommand.LiteralPaste register -> x.LiteralPaste register
 
     /// Shift the caret line one 'shiftwidth' in a direction.  This is
     /// different than both normal and visual mode shifts because it will
@@ -761,6 +763,25 @@ type internal InsertUtil
     member x.Paste () =
         _editorOperations.Paste() |> ignore
         CommandResult.Completed ModeSwitch.NoSwitch
+
+    /// Paste clipboard
+    member x.LiteralPaste register =
+        let sometext =
+            register |> Some
+            |> OptionUtil.map2 RegisterName.OfChar
+            |> Option.map _registermap.GetRegister
+            |> OptionUtil.map2 (fun register ->
+                let value = register.StringValue
+                match value with
+                | "" -> None
+                | _ -> Some value)
+
+        let registerContent =
+            match sometext with
+            | None -> ""
+            | Some text-> text
+
+        x.Insert (registerContent)
 
     member x.ExtraTextChange textChange addNewLines = 
         x.ApplyTextChange textChange addNewLines 

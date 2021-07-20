@@ -40,6 +40,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\InlineRename\IInlineRenameUtil.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\InlineRename\InlineRenameListenerFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\InlineRename\InlineRenameUtil.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Implementation\IntelliCode\IntelliCodeCommandTarget.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\Misc\CSharpAdapter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\Misc\ExtensionAdapterBroker.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implementation\Misc\FallbackKeyProcessor.cs" />

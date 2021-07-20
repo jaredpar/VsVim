@@ -1,6 +1,4 @@
-﻿#if VS_SPECIFIC_2017 || VS_SPECIFIC_2019
-
-using Vim.Interpreter;
+﻿using Vim.Interpreter;
 
 namespace Vim.VisualStudio.Implementation.CSharpScript
 {
@@ -24,4 +22,3 @@ namespace Vim.VisualStudio.Implementation.CSharpScript
         }
     }
 }
-#endif

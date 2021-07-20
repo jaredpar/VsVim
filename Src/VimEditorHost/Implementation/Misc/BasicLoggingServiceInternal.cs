@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace Vim.EditorHost.Implementation.Misc
 {
+#if VS_SPECIFIC_2022
+#elif VS_SPECIFIC_2017 || VS_SPECIFIC_2019
     [Export(typeof(ILoggingServiceInternal))]
     internal sealed class BasicLoggingServiceInternal : ILoggingServiceInternal
     {
@@ -89,4 +91,7 @@ namespace Vim.EditorHost.Implementation.Misc
 #error Unsupported configuration
 #endif
     }
+#else
+#error Unsupported configuration
+#endif
 }

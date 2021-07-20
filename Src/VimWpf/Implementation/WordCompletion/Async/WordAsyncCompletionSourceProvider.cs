@@ -1,4 +1,4 @@
-﻿#if VS_SPECIFIC_2019 || VS_SPECIFIC_MAC
+﻿#if VS_SPECIFIC_2019 || VS_SPECIFIC_2022 || VS_SPECIFIC_MAC
 using Microsoft.VisualStudio.Language.Intellisense.AsyncCompletion;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;

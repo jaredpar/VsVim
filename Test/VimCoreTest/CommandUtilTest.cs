@@ -994,6 +994,7 @@ namespace Vim.UnitTest
                     Assert.Equal(3, _windowSettings.Scroll);
                 }
 
+#if !VS_SPECIFIC_2022 // https://github.com/VsVim/VsVim/issues/2916
                 /// <summary>
                 /// Make sure that scroll lines down handles a fold as a single line
                 /// </summary>
@@ -1006,6 +1007,7 @@ namespace Vim.UnitTest
                     _commandUtil.ScrollLines(ScrollDirection.Down, false, FSharpOption.Create(2));
                     Assert.Equal(3, _textView.GetCaretLine().LineNumber);
                 }
+#endif
             }
 
             public sealed class ScrollLinesUpTest : ScrollLinesTest
@@ -2849,6 +2851,7 @@ namespace Vim.UnitTest
                 Assert.Equal(OperationKind.LineWise, UnnamedRegister.OperationKind);
             }
 
+#if !VS_SPECIFIC_2022 // https://github.com/VsVim/VsVim/issues/2916
             /// <summary>
             /// Ensure that yank lines operates against the visual buffer and will yank 
             /// the folded text
@@ -2872,12 +2875,14 @@ namespace Vim.UnitTest
             {
                 Create("cat", "dog", "bear", "fish", "pig");
                 _foldManager.CreateFold(_textView.GetLineRange(1, 2));
+                _textView.ForceLayout();
                 _commandUtil.YankLines(3, VimUtil.MissingRegisterName);
                 var lines = new[] { "cat", "dog", "bear", "fish" };
                 var text = lines.Aggregate((x, y) => x + Environment.NewLine + y) + Environment.NewLine;
                 Assert.Equal(text, UnnamedRegister.StringValue);
                 Assert.Equal(OperationKind.LineWise, UnnamedRegister.OperationKind);
             }
+#endif
         }
 
         public sealed class OpenFoldInSelectionTest : CommandUtilTest

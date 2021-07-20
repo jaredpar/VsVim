@@ -1374,16 +1374,27 @@ namespace Vim.EditorHost
 
         public static void ForceLayout(this IWpfTextView wpfTextView)
         {
+#if VS_SPECIFIC_2022
+            var method = wpfTextView
+                .GetType()
+                .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
+                .Single(x => x.Name == "PerformLayout" && x.GetParameters().Length == 0);
+            method.Invoke(wpfTextView, Array.Empty<object>());
+            Dispatcher.CurrentDispatcher.DoEvents();
+#elif VS_SPECIFIC_2017 || VS_SPECIFIC_2019
             var method = wpfTextView
                 .GetType()
                 .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
                 .Single(x => x.Name == "PerformLayout" && x.GetParameters().Length == 2);
             method.Invoke(wpfTextView, new[] { wpfTextView.TextSnapshot, wpfTextView.VisualSnapshot });
+#else
+#error Unsupported configuration
+#endif
         }
 
-        #endregion
+#endregion
 
-        #region SelectionSpan
+#region SelectionSpan
 
         public static SelectionSpan AdjustCaretForInclusive(this SelectionSpan selectedSpan)
         {
@@ -1409,9 +1420,9 @@ namespace Vim.EditorHost
             }
         }
 
-        #endregion SelectionSpan
+#endregion SelectionSpan
 
-        #region VisualSpan
+#region VisualSpan
 
         public static VisualSpan.Character AsCharacter(this VisualSpan span)
         {
@@ -1431,9 +1442,9 @@ namespace Vim.EditorHost
             return (VisualSpan.Block)span;
         }
 
-        #endregion
+#endregion
 
-        #region VisualSelection
+#region VisualSelection
 
         public static VisualSelection.Character AsCharacter(this VisualSelection span)
         {
@@ -1453,9 +1464,9 @@ namespace Vim.EditorHost
             return (VisualSelection.Block)span;
         }
 
-        #endregion
+#endregion
 
-        #region ICommandRunner
+#region ICommandRunner
 
         public static BindResult<CommandRunData> Run(this ICommandRunner runner, VimKey key)
         {
@@ -1485,9 +1496,9 @@ namespace Vim.EditorHost
             return result;
         }
 
-        #endregion
+#endregion
 
-        #region ICommonOperations
+#region ICommonOperations
 
         public static void SetRegisterValue(this ICommonOperations operations, RegisterName name, RegisterOperation operation, RegisterValue value)
         {
@@ -1509,9 +1520,9 @@ namespace Vim.EditorHost
             operations.ShiftLineRangeRight(range, 1);
         }
 
-        #endregion
+#endregion
 
-        #region BindResult<T>
+#region BindResult<T>
 
         public static BindResult<T> Run<T>(this BindResult<T> result, KeyInput keyInput)
         {
@@ -1538,9 +1549,9 @@ namespace Vim.EditorHost
         public static BindResult<T> Run<T>(this BindResult<T> result, string text, bool enter = false) =>
             Run(result, VimUtil.ConvertTextToKeyInput(text, enter));
 
-        #endregion
+#endregion
 
-        #region BindData<T>
+#region BindData<T>
         public static BindResult<T> Run<T>(this BindData<T> data, KeyInput keyInput) =>
             data.BindFunction.Invoke(keyInput);
 
@@ -1564,9 +1575,9 @@ namespace Vim.EditorHost
         public static BindResult<T> Run<T>(this BindData<T> data, string text, bool enter = false) =>
             Run(data, VimUtil.ConvertTextToKeyInput(text, enter));
 
-        #endregion
+#endregion
 
-        #region SearchResult
+#region SearchResult
 
         public static SearchResult.Found AsFound(this SearchResult result)
         {
@@ -1585,18 +1596,18 @@ namespace Vim.EditorHost
             return result.IsFound && result.AsFound().SpanWithOffset.Start == startPosition;
         }
 
-        #endregion
+#endregion
 
-        #region CaretColumn
+#region CaretColumn
 
         public static CaretColumn.InLastLine AsInLastLine(this CaretColumn column)
         {
             return (CaretColumn.InLastLine)column;
         }
 
-        #endregion
+#endregion
 
-        #region IIncrementalSearchSession
+#region IIncrementalSearchSession
 
         public static async Task<BindResult<SearchResult>> DoSearchAsync(this IIncrementalSearchSession session, params KeyInput[] keyInputs)
         {
@@ -1618,9 +1629,9 @@ namespace Vim.EditorHost
         public static async Task<BindResult<SearchResult>> DoSearchAsync(this IIncrementalSearchSession session, string text, bool enter = true) =>
             await DoSearchAsync(session, VimUtil.ConvertTextToKeyInput(text, enter));
 
-        #endregion
+#endregion
 
-        #region IIncrementalSearch
+#region IIncrementalSearch
 
         public static async Task<BindResult<SearchResult>> DoSearchAsync(this IIncrementalSearch search, SearchPath searchPath, params KeyInput[] keyInputs)
         {
@@ -1667,9 +1678,9 @@ namespace Vim.EditorHost
             }
         }
 
-        #endregion
+#endregion
 
-        #region TextChange
+#region TextChange
 
         public static TextChange.Insert AsInsert(this TextChange change)
         {
@@ -1706,9 +1717,9 @@ namespace Vim.EditorHost
             return change.IsDeleteRight && change.AsDeleteRight().Count == count;
         }
 
-        #endregion
+#endregion
 
-        #region SnapshotSpan
+#region SnapshotSpan
 
         /// <summary>
         /// Convert the SnapshotSpan into an EditSpan
@@ -1720,9 +1731,9 @@ namespace Vim.EditorHost
         /// </summary>
         public static EditSpan ToEditSpan(this SnapshotColumnSpan span) => EditSpan.NewSingle(span);
 
-        #endregion
+#endregion
 
-        #region IMarkMap
+#region IMarkMap
 
         public static void SetLocalMark(this IMarkMap markMap, char c, IVimBufferData vimBufferData, int line, int column)
         {
@@ -1731,9 +1742,9 @@ namespace Vim.EditorHost
             markMap.SetMark(mark, vimBufferData, line, column);
         }
 
-        #endregion
+#endregion
 
-        #region VisualElement
+#region VisualElement
 
         public static TextComposition CreateTextComposition(this FrameworkElement frameworkElement, string text, InputManager inputManager = null)
         {
@@ -1773,9 +1784,9 @@ namespace Vim.EditorHost
             return args;
         }
 
-        #endregion
+#endregion
 
-        #region HistoryList
+#region HistoryList
 
         public static void AddRange(this HistoryList historyList, params string[] values)
         {
@@ -1785,9 +1796,9 @@ namespace Vim.EditorHost
             }
         }
 
-        #endregion
+#endregion
 
-        #region IVimData
+#region IVimData
 
         public static void AddAutoCommand(this IVimData vimData, EventKind eventKind, string pattern, string command)
         {
@@ -1799,9 +1810,9 @@ namespace Vim.EditorHost
             vimData.AutoCommands = vimData.AutoCommands.Concat(new[] { autoCommand }).ToFSharpList();
         }
 
-        #endregion
+#endregion
 
-        #region SynchronizationContext
+#region SynchronizationContext
 
         public static SynchronizationContext GetEffectiveSynchronizationContext(this SynchronizationContext context)
         {
@@ -1823,7 +1834,7 @@ namespace Vim.EditorHost
             }
         }
 
-        #endregion
+#endregion
 
         /// <summary>
         /// Run the specified motion with default arguments

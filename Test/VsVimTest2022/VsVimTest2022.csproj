@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Vim.VisualStudio.UnitTest</RootNamespace>
+    <AssemblyName>Vim.VisualStudio.Shared.2022.UnitTest</AssemblyName>
+    <TargetFramework>net472</TargetFramework>
+    <VsVimVisualStudioTargetVersion>17.0</VsVimVisualStudioTargetVersion>
+    <VsVimProjectType>EditorHost</VsVimProjectType>
+    <DefineConstants>$(DefineConstants);VS_UNIT_TEST_HOST</DefineConstants>
+    <!-- Enabling tracked by https://github.com/VsVim/VsVim/issues/2904 -->
+    <RunAnalyzers>false</RunAnalyzers>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.Setup.Configuration.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <PackageReference Include="Castle.Core" Version="4.0.0-beta002" />
+    <PackageReference Include="Moq" Version="4.5.28" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.extensibility.execution" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.console" Version="2.4.1" />
+  </ItemGroup>
+ <ItemGroup>
+    <ProjectReference Include="..\..\Src\VimCore\VimCore.fsproj" />
+    <ProjectReference Include="..\..\Src\VimTestUtils\VimTestUtils.csproj" />
+    <ProjectReference Include="..\..\Src\VsVim2022\VsVim2022.csproj" />
+  </ItemGroup>
+  <Import Project="..\VsVimSharedTest\VsVimSharedTest.projitems" Label="Shared" />
+  <Import Project="..\VimWpfTest\VimWpfTest.projitems" Label="Shared" />
+</Project>

@@ -8,7 +8,6 @@ using Vim.Interpreter;
 
 namespace Vim.VisualStudio.Implementation.CSharpScript
 {
-#if VS_SPECIFIC_2017 || VS_SPECIFIC_2019
     using Microsoft.CodeAnalysis.CSharp.Scripting;
     using Microsoft.CodeAnalysis.Scripting;
     using CSharpScript = Microsoft.CodeAnalysis.CSharp.Scripting.CSharpScript;
@@ -117,8 +116,4 @@ namespace Vim.VisualStudio.Implementation.CSharpScript
         #endregion
 
     }
-
-#else
-#error Unsupported configuration
-#endif
 }

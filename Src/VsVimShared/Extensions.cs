@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows.Media;
 using EnvDTE;
@@ -199,15 +200,6 @@ namespace Vim.VisualStudio
                 // Several implementations, Transact SQL in particular, return E_FAIL for this
                 // operation.  Simply ignore the failure and continue
             }
-        }
-
-        #endregion
-
-        #region Commands
-
-        public static IEnumerable<DteCommand> GetCommands(this Commands commands)
-        {
-            return commands.Cast<DteCommand>();
         }
 
         #endregion
@@ -1000,6 +992,22 @@ namespace Vim.VisualStudio
                     yield return item;
                 }
             }
+        }
+
+        public static IEnumerable<DteCommand> GetCommands(this _DTE dte)
+        {
+            try
+            {
+                return GetCommandsCore();
+            }
+            catch (MissingMethodException)
+            {
+                return Enumerable.Empty<DteCommand>();
+            }
+
+
+            [MethodImpl(MethodImplOptions.NoInlining)]
+            IEnumerable<DteCommand> GetCommandsCore() => dte.Commands.Cast<DteCommand>();
         }
 
         #endregion

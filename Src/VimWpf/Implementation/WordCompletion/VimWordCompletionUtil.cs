@@ -9,7 +9,7 @@ using Microsoft.FSharp.Core;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Microsoft.VisualStudio.Editor;
 
-#if VS_SPECIFIC_2019 || VS_SPECIFIC_MAC
+#if VS_SPECIFIC_2019 || VS_SPECIFIC_2022 || VS_SPECIFIC_MAC
 using Microsoft.VisualStudio.Language.Intellisense.AsyncCompletion;
 using Vim.UI.Wpf.Implementation.WordCompletion.Async;
 #endif
@@ -28,7 +28,7 @@ namespace Vim.UI.Wpf.Implementation.WordCompletion
     [Export(typeof(IWordCompletionSessionFactory))]
     internal sealed class VimWordCompletionUtil: IWordCompletionSessionFactory
     {
-#if VS_SPECIFIC_2019 || VS_SPECIFIC_MAC
+#if VS_SPECIFIC_2019 || VS_SPECIFIC_2022 || VS_SPECIFIC_MAC
         private readonly IAsyncCompletionBroker _asyncCompletionBroker;
         private readonly WordAsyncCompletionSessionFactory _asyncFactory;
         private readonly WordLegacyCompletionSessionFactory _legacyFactory;
@@ -37,7 +37,7 @@ namespace Vim.UI.Wpf.Implementation.WordCompletion
         internal VimWordCompletionUtil(
             IAsyncCompletionBroker asyncCompletionBroker,
             ICompletionBroker completionBroker,
-#if VS_SPECIFIC_2019
+#if VS_SPECIFIC_2019 || VS_SPECIFIC_2022
             IIntellisenseSessionStackMapService intellisenseSessionStackMapService,
             [Import(AllowDefault = true)] IVsEditorAdaptersFactoryService vsEditorAdapterFactoryService = null)
 #elif VS_SPECIFIC_MAC
@@ -45,7 +45,7 @@ namespace Vim.UI.Wpf.Implementation.WordCompletion
 #endif
         {
             _asyncCompletionBroker = asyncCompletionBroker;
-#if VS_SPECIFIC_2019
+#if VS_SPECIFIC_2019 || VS_SPECIFIC_2022
             _asyncFactory = new WordAsyncCompletionSessionFactory(asyncCompletionBroker, vsEditorAdapterFactoryService);
 #elif VS_SPECIFIC_MAC
             _asyncFactory = new WordAsyncCompletionSessionFactory(asyncCompletionBroker);

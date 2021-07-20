@@ -1,4 +1,4 @@
-﻿#if VS_SPECIFIC_2019 || VS_SPECIFIC_MAC
+﻿#if VS_SPECIFIC_2019 || VS_SPECIFIC_2022 || VS_SPECIFIC_MAC
 using System;
 using Microsoft.VisualStudio.Language.Intellisense.AsyncCompletion;
 using Microsoft.VisualStudio.Text.Editor;
@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.Utilities;
 using Vim;
 using System.Threading;
 using System.Windows.Threading;
-#if VS_SPECIFIC_2019
+#if VS_SPECIFIC_2019 || VS_SPECIFIC_2022
 using Microsoft.VisualStudio.TextManager.Interop;
 using Microsoft.VisualStudio.Editor;
 #endif
@@ -25,7 +25,7 @@ namespace Vim.UI.Wpf.Implementation.WordCompletion.Async
         private bool _isDismissed;
         private event EventHandler _dismissed;
         private readonly DispatcherTimer _tipTimer;
-#if VS_SPECIFIC_2019
+#if VS_SPECIFIC_2019 || VS_SPECIFIC_2022
         private readonly IVsTextView _vsTextView;
 
         internal WordAsyncCompletionSession(IAsyncCompletionSession asyncCompletionSession, IVsEditorAdaptersFactoryService vsEditorAdaptersFactoryService = null)
@@ -85,7 +85,7 @@ namespace Vim.UI.Wpf.Implementation.WordCompletion.Async
         {
             try
             {
-#if VS_SPECIFIC_2019
+#if VS_SPECIFIC_2019 || VS_SPECIFIC_2022
 
                 var methodInfo = _vsTextView.GetType().BaseType.GetMethod(
                     "SetTipOpacity",

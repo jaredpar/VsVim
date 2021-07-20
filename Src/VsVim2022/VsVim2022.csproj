@@ -1,0 +1,84 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProductVersion>10.0.20305</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Vim.VisualStudio</RootNamespace>
+    <AssemblyName>VsVim</AssemblyName>
+    <TargetFramework>net472</TargetFramework>
+    <StartAction>Program</StartAction>
+    <UseCodebase>true</UseCodebase>
+    <StartProgram>$(DevEnvDir)\devenv.exe</StartProgram>
+    <StartArguments>/rootsuffix Exp</StartArguments>
+    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
+    <VsVimProjectType>Vsix</VsVimProjectType>
+    <VsVimVisualStudioTargetVersion>17.0</VsVimVisualStudioTargetVersion>
+
+    <!-- Enabling tracked by https://github.com/VsVim/VsVim/issues/2904 -->
+    <RunAnalyzers>false</RunAnalyzers>
+
+    <DeployExtension Condition="'$(VisualStudioVersion)' != '17.0' OR '$(BuildingInsideVisualStudio)' != 'true'">False</DeployExtension>
+
+    <!-- This is needed to prevent forced migrations when opening the project in Vs2017 -->
+    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Shared items -->
+    <Content Include="..\VsVimShared\Metadata\Images_32bit.bmp" Link="Images_32bit.bmp" />
+    <Content Include="..\VsVimShared\Metadata\KeyboardInputRouting.txt" Link="KeyboardInputRouting.txt" />
+    <Content Include="..\VsVimShared\Metadata\License.txt" Link="License.txt">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\VsVimShared\Metadata\Package.ico" Link="Package.ico" />
+    <Content Include="..\VsVimShared\Metadata\VsVim_large.png" Link="VsVim_large.png">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\VsVimShared\Metadata\VsVim_small.png" Link="VsVim_small.png">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\VsVimShared\Metadata\Colors.pkgdef" Link="Colors.pkgdef">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\VsVimShared\Metadata\VsVim_full.pdf" Link="VsVim_full.pdf">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\VsVimShared\Metadata\VsVim.vsct" Link="VsVim.vsct" />
+    <VSCTCompile Include="..\VsVimShared\Metadata\VsVim.vsct">
+      <ResourceName>Menus.ctmenu</ResourceName>
+      <SubType>Designer</SubType>
+    </VSCTCompile>
+
+    <None Include="source.extension.vsixmanifest">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+    <ProjectReference Include="..\VimCore\VimCore.fsproj">
+      <Name>VimCore</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
+      <ForceIncludeInVSIX>true</ForceIncludeInVSIX>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="..\VsVimShared\VsVimShared.projitems" Label="Shared" />
+  <Import Project="..\VimWpf\VimWpf.projitems" Label="Shared" />
+</Project>

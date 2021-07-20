@@ -9,10 +9,7 @@
     <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
     <OutputPath>$(BinariesPath)$(Configuration)\$(MSBuildProjectName)</OutputPath>
     <BaseIntermediateOutputPath>$(BinariesPath)obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
-
-    <!-- The version of VS that should be targetted for testing for host agnostic projects. Prefer
-         the lowest supported Visual Studio version but allow changing via environment variable -->
-    <VsVimVisualStudioTargetVersion Condition="'$(VsVimVisualStudioTargetVersion)' == ''">16.0</VsVimVisualStudioTargetVersion>
+    <MicrosoftVsSdkBuildToolsVersion>17.0.2155-preview2</MicrosoftVsSdkBuildToolsVersion>
 
     <!-- Standard Calculation of NuGet package location -->
     <NuGetPackageRoot Condition="'$(NuGetPackageRoot)' == ''">$(NUGET_PACKAGES)</NuGetPackageRoot> <!-- Respect environment variable if set -->
@@ -35,6 +32,7 @@
     <ReferencePath>$(ReferencePath);$(MSBuildThisFileDirectory)References\Common</ReferencePath>
     <ReferencePath>$(ReferencePath);$(MSBuildThisFileDirectory)References\Vs2017</ReferencePath>
     <ReferencePath>$(ReferencePath);$(MSBuildThisFileDirectory)References\Vs2019</ReferencePath>
+    <ReferencePath>$(ReferencePath);$(MSBuildThisFileDirectory)References\Vs2022</ReferencePath>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">$(MSBuildThisFileDirectory)</SolutionDir>
 
     <!-- This controls the places MSBuild will consult to resolve assembly references.  This is 

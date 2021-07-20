@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <PlatformTarget>x86</PlatformTarget>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VimApp</RootNamespace>
     <AssemblyName>VimApp</AssemblyName>
     <TargetFramework>net472</TargetFramework>
     <DefineConstants>$(DefineConstants);VS_SPECIFIC_VIM_APP</DefineConstants>
+    <VsVimVisualStudioTargetVersion>17.0</VsVimVisualStudioTargetVersion>
     <VsVimProjectType>EditorHost</VsVimProjectType>
     <!-- Enabling tracked by https://github.com/VsVim/VsVim/issues/2904 -->
     <RunAnalyzers>false</RunAnalyzers>
@@ -33,7 +33,6 @@
   <ItemGroup>
     <ProjectReference Include="..\VimCore\VimCore.fsproj" />
     <ProjectReference Include="..\VimTestUtils\VimTestUtils.csproj" />
-    <Reference Include="Microsoft.VisualStudio.TextManager.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="Microsoft.VisualStudio.Setup.Configuration.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>

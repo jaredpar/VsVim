@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="16.10.1055" Condition="'$(VsVimProjectType)' == 'Vsix'" />
-  </ItemGroup>
-
-  <ItemGroup>
     <!-- 
       By using the 2.10.0.0 versions here this essentially limits VsVim to the 15.10 release. That is probably 
       okay as earlier versions of 15 are not commonly used (to my understanding). But if it became an issue could
@@ -55,6 +51,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
 
+    <Reference Include="Microsoft.VisualStudio.TextManager.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="Microsoft.VisualStudio.Text.Internal, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.Platform.VSEditor, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.Platform.VSEditor.Interop, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />

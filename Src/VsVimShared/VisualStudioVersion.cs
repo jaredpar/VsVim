@@ -10,5 +10,6 @@ namespace Vim.VisualStudio
     {
         Vs2017,
         Vs2019,
+        Vs2022,
     }
 }

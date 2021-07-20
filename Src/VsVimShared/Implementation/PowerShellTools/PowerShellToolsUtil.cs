@@ -10,7 +10,7 @@ namespace Vim.VisualStudio.Implementation.PowerShellTools
     internal sealed class PowerShellToolsUtil : IPowerShellToolsUtil
     {
         //https://github.com/adamdriscoll/poshtools/blob/dev/PowerShellTools/Guids.cs
-        //Visual Studio 2017,2019
+        //Visual Studio 2017,2019,2022
         private static readonly Guid s_powerShellToolsPackageIdDev15 = new Guid("{0429083f-fdbc-47a3-84ff-b3d50343b21e}");
         private readonly bool _isPowerShellToolsInstalled;
 

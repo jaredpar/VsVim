@@ -23,7 +23,7 @@ $ErrorActionPreference="Stop"
 [string]$deployDir = Join-Path $binariesDir "Deploy"
 [string]$logsDir = Join-Path $binariesDir "Logs"
 [string]$toolsDir = Join-Path $rootDir "Tools"
-[string[]]$vsVersions = @("2017", "2019")
+[string[]]$vsVersions = @("2017", "2019", "2022")
 
 function Print-Usage() {
   Write-Host "Actions:"

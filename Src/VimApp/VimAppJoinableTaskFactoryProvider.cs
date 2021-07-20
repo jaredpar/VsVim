@@ -25,7 +25,7 @@ namespace VimApp
                 {
 #if VS_SPECIFIC_2017
                     s_joinableTaskContext = new JoinableTaskContext();
-#elif VS_SPECIFIC_2019
+#elif VS_SPECIFIC_2019 || VS_SPECIFIC_2022
                     s_joinableTaskContext = ThreadHelper.JoinableTaskContext;
 #else
 #error Unsupported configuration

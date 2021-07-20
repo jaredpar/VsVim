@@ -124,7 +124,7 @@ namespace Vim.VisualStudio
                 var dte = vsServiceProvider.GetService<SDTE, _DTE>();
 
                 var vsvimGuidGroup = GuidList.VsVimCommandSet;
-                var vimCommand = dte.Commands.GetCommands()
+                var vimCommand = dte.GetCommands()
                     .Where(c => new Guid(c.Guid) == vsvimGuidGroup && c.ID == CommandIds.ClearTSQLBindings)
                     .FirstOrDefault();
                 if (vimCommand == null)
@@ -134,7 +134,7 @@ namespace Vim.VisualStudio
 
                 var targetKeyStroke = new KeyStroke(KeyInputUtil.CharToKeyInput('d'), VimKeyModifiers.Control);
                 var tsqlGuidGroup = new Guid("{b371c497-6d81-4b13-9db8-8e3e6abad0c3}");
-                var tsqlCommands = dte.Commands.GetCommands().Where(c => new Guid(c.Guid) == tsqlGuidGroup);
+                var tsqlCommands = dte.GetCommands().Where(c => new Guid(c.Guid) == tsqlGuidGroup);
                 foreach (var tsqlCommand in tsqlCommands)
                 {
                     foreach (var commandKeyBinding in tsqlCommand.GetCommandKeyBindings().ToList())

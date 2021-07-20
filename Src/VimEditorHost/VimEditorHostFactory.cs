@@ -19,6 +19,10 @@ namespace Vim.EditorHost
         internal static EditorVersion DefaultEditorVersion => EditorVersion.Vs2019;
         internal static Version VisualStudioVersion => new Version(16, 0, 0, 0);
         internal static Version VisualStudioThreadingVersion => new Version(16, 0, 0, 0);
+#elif VS_SPECIFIC_2022
+        internal static EditorVersion DefaultEditorVersion => EditorVersion.Vs2022;
+        internal static Version VisualStudioVersion => new Version(17, 0, 0, 0);
+        internal static Version VisualStudioThreadingVersion => new Version(17, 0, 0, 0);
 #else
 #error Unsupported configuration
 #endif

@@ -12,7 +12,6 @@
     <PackageReference Include="Microsoft.VisualStudio.Sdk.EmbedInteropTypes" Version="15.0.36" ExcludeAssets="all" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="3.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.TextManager.Interop.10.0" Version="16.7.30328.74" />
-    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="16.10.1055" Condition="'$(VsVimProjectType)' == 'Vsix'" />
 
     <!--
       These are private assemblies and not typically considered as a part of the official VS SDK. But
@@ -28,6 +27,7 @@
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Platform.VSEditor, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.Text.Internal, Version=16.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.TextManager.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
 
     <None Include="$(MSBuildThisFileDirectory)App.config">
       <Link>app.config</Link>

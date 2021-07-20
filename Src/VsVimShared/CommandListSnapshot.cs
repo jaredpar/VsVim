@@ -44,7 +44,7 @@ namespace Vim.VisualStudio
             get { return _commandKeyBindings.Select(x => x.KeyBinding); }
         }
 
-        public CommandListSnapshot(_DTE dte) : this(dte.Commands.GetCommands())
+        public CommandListSnapshot(_DTE dte) : this(dte.GetCommands())
         {
         }
 

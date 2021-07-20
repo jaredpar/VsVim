@@ -1,0 +1,35 @@
+<Project>
+
+  <Import Project="$(MSBuildThisFileDirectory)..\..\Src\VimEditorHost\VimEditorHost.projitems" Label="Shared" Condition="'$(VsVimProjectType)' == 'EditorHost'" />
+
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);VS_SPECIFIC_2022</DefineConstants>
+    <DefineConstants Condition="'$(VsVimProjectType)' == 'EditorHost'">$(DefineConstants);VIM_SPECIFIC_TEST_HOST</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Sdk" Version="17.0.0-previews-2-31512-422" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.0.0-1.final" />
+
+    <!--
+      These are private assemblies and not typically considered as a part of the official VS SDK. But
+      they are needed for some of the window / tab management code hence are used here -->
+    <Reference Include="Microsoft.VisualStudio.Platform.WindowManagement, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Shell.ViewManager, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Diagnostics.Assert, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(VsVimProjectType)' == 'EditorHost'">
+    <Reference Include="Microsoft.VisualStudio.Setup.Configuration.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Platform.VSEditor, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Text.Internal, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+
+    <None Include="$(MSBuildThisFileDirectory)App.config">
+      <Link>app.config</Link>
+    </None>
+  </ItemGroup>
+
+  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VsVimProjectType)' == 'Vsix' AND '$(VSToolsPath)' != ''" />
+</Project>

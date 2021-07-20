@@ -262,7 +262,7 @@ namespace Vim.VisualStudio.Implementation.Misc
             {
                 // Make sure we write out the string for the localized scope name
                 var globalScopeName = _scopeData.GlobalScopeName;
-                foreach (var command in _dte.Commands.GetCommands())
+                foreach (var command in _dte.GetCommands())
                 {
                     if (!command.TryGetCommandId(out CommandId commandId))
                     {
@@ -299,7 +299,7 @@ namespace Vim.VisualStudio.Implementation.Misc
         {
             try
             {
-                foreach (var dteCommand in _dte.Commands.GetCommands())
+                foreach (var dteCommand in _dte.GetCommands())
                 {
                     streamWriter.WriteLine("Command: {0}", dteCommand.Name);
 

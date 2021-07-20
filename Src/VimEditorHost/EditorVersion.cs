@@ -13,5 +13,6 @@ namespace Vim.EditorHost
     {
         Vs2017,
         Vs2019,
+        Vs2022,
     }
 }

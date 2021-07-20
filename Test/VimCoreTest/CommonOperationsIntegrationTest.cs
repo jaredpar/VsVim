@@ -136,6 +136,7 @@ namespace Vim.UnitTest
                     AssertFirstLine(5);
                 }
 
+#if !VS_SPECIFIC_2022 // https://github.com/VsVim/VsVim/issues/2916
                 /// <summary>
                 /// Folded text should count as a single line 
                 /// </summary>
@@ -150,6 +151,7 @@ namespace Vim.UnitTest
                     _commonOperationsRaw.AdjustTextViewForScrollOffset();
                     AssertFirstLine(2);
                 }
+#endif
             }
 
             public sealed class BottomTest : ScrollOffsetTest
@@ -202,6 +204,7 @@ namespace Vim.UnitTest
                     AssertLastLine(_lastLineNumber);
                 }
 
+#if !VS_SPECIFIC_2022 // https://github.com/VsVim/VsVim/issues/2916
                 [WpfFact]
                 public void OverFold()
                 {
@@ -214,6 +217,7 @@ namespace Vim.UnitTest
                     _commonOperationsRaw.AdjustTextViewForScrollOffset();
                     AssertLastLine(mouseLineNumber + 5);
                 }
+#endif
             }
 
             public sealed class MiscScrollOffsetTest : ScrollOffsetTest
@@ -776,7 +780,7 @@ namespace Vim.UnitTest
                     Assert.Equal(3, _textView.GetCaretPoint().Position);
                 }
             }
-#elif VS_SPECIFIC_2019
+#elif VS_SPECIFIC_2019 || VS_SPECIFIC_2022
             // https://github.com/VsVim/VsVim/issues/2463
 #else
 #error Unsupported configuration

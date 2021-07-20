@@ -1,4 +1,4 @@
-﻿#if VS_SPECIFIC_2019
+﻿#if VS_SPECIFIC_2019 || VS_SPECIFIC_2022
 using System;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Primitives;
